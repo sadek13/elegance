@@ -26,13 +26,15 @@ foreach($_POST as $key => $value) {
         exit;
     }
     else{
+        // var_dump($value);
 $_SESSION['cart'][]=$value;
 $response=array(
     "status"=>"ok",
-    "message"=>"Item added to cart",
+    "message"=>"Itsasem added to cart",
     );
 
     echo json_encode($response);
+    exit;
     }
 }}
 

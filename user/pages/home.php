@@ -17,12 +17,13 @@ $user=new User();
 // Now you can set session variables
 
 //ID
-$userID= $_SESSION['userID'];
-
-
+if(isset($_SESSION['userID'])){
+    $userID= $_SESSION['userID']; 
 
 //getting error from not having the id inside the url when going back using the home button
 $userIN=$user->getUserDataByID($userID);
+
+}
 
 $prod=$product->getProductById(1);
 
@@ -33,7 +34,6 @@ $featuredProds=$product->getFeaturedProducts();
 $cats=$category->getallCategories(); 
 
 
-$_SESSION['userID'] = $userID;    
 
 
 
@@ -58,9 +58,6 @@ $_SESSION['userID'] = $userID;
   <?php //require('../common/top-bar.php');?>
         <!-- Top bar End -->
 
-        <span id="words"></span>
-<input id="number" type="text" />
-<button id='translate'></button>
         
         <!-- Nav Bar Start -->
         <?php require('../common/nav-bar.php');?>
@@ -152,7 +149,6 @@ $_SESSION['userID'] = $userID;
 
      
 // sendPreFilter(filter)
-
 
 
     </script>

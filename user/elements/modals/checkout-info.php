@@ -10,52 +10,52 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-      <form method="post" action="../actions/category/update_category.php" id='checkOutInfo'>
-     
+        <form method="post" id='checkOutInfo'>
 
-<div class="row">
-                                   <div class="col-md-6">
-                                       <label>First Name</label>
-                                       <input class="form-control" type="text" placeholder="First Name" name="first_name">
-                                   </div>
-                                   <div class="col-md-6">
-                                       <label>Last Name</label>
-                                       <input class="form-control" type="text" placeholder="Last Name" name="last_name">
-                                   </div>
 
-                                   <div class="col-md-6">
-                                       <label>E-mail</label>
-                                       <input class="form-control" type="text" placeholder="E-mail" name="email">
-                                     
-                                   </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>First Name</label>
+              <input class="form-control" type="text" placeholder="First Name" name="first_name">
+            </div>
+            <div class="col-md-6">
+              <label>Last Name</label>
+              <input class="form-control" type="text" placeholder="Last Name" name="last_name">
+            </div>
 
-                                   <div class="col-md-6">
-                                       <label>Mobile No</label>
-                                       <input class="form-control" type="text" placeholder="Mobile No" name="mobile">
-                                   </div>
+            <div class="col-md-6">
+              <label>E-mail</label>
+              <input class="form-control" type="text" placeholder="E-mail" name="email">
 
-                                   <h4>Recipient Delivery Info</h4>
-                                   <div class="col-md-6">
-                                    <label for='address'> Address</label>
-                                       <input class='form-control' id="address" type='text' placeholder='Address' name='address'>
+            </div>
 
-                                       <label for='street'>Street Number or Name</label>
-                                       <input class='form-control' for="street" type='text' placeholder="Street" name='street'>
+            <div class="col-md-6">
+              <label>Mobile No</label>
+              <input class="form-control" type="text" placeholder="Mobile No" name="mobile">
+            </div>
 
-                                       <label for='building'>Building name floor</label>
-                                       <input class='form-control' for="building" type='text' placeholder="Building" name='building'>
-                                      
-                                    
+            <h4>Recipient Delivery Info</h4>
+            <div class="col-md-6">
+              <label for='address'> Address</label>
+              <input class='form-control' id="address" type='text' placeholder='Address' name='address'>
 
-                                   </div>
-                                
-                                   
-                                 
-                               </div>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id='checkout'>Checkout</button>
-</form>
-    </div>
+              <label for='street'>Street Number or Name</label>
+              <input class='form-control' for="street" type='text' placeholder="Street" name='street'>
+
+              <label for='building'>Building name floor</label>
+              <input class='form-control' for="building" type='text' placeholder="Building" name='building'>
+
+
+
+            </div>
+
+
+
+          </div>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id='checkoutAPSBtn'>Checkout</button><span class="bg-dark text-light">Pay With APS</span>
+        </form>
+      </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
@@ -65,6 +65,3 @@
     </div>
   </div>
 </div>
-
-
-

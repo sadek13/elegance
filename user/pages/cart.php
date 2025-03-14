@@ -3,6 +3,13 @@
 
 require('../class/product.class.php');
  require('../common/head.php');
+
+// require_once '../vendor/_autoload.php';
+
+//  use vendor\AmazonPaymentServicesSdk\AmazonPaymentServices\Exceptions\APSException;
+// use vendor\AmazonPaymentServicesSdk\AmazonPaymentServices\Merchant\APSMerchant;
+// use vendor\AmazonPaymentServicesSdk\FrontEndAdapter\Payments\CCCustom;
+
 $product=new Product();
 
 
@@ -12,7 +19,8 @@ $items=isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
 $jsonItems = json_encode($items);
 
-$userID=json_encode($_SESSION['userID']);
+// var_dump($jsonItems);
+// $userID=json_encode($_SESSION['userID']);
 
 
 
@@ -50,6 +58,10 @@ function getImage($id,$product){
         <?php require('../common/nav-bar.php');?>
         <!-- Nav Bar End -->      
    
+        <div>
+       
+    
+    </div>
 
         <div class="cart-page">
             <div class="container-fluid">
@@ -65,7 +77,7 @@ function getImage($id,$product){
                                             <th>Material</th>
                                             
                                             <th>Quantity</th>
-                                            <th>Price</th>
+                                            <th>Price($)</th>
                                             <th>Remove</th>
                                         </tr>
                                     </thead>
@@ -124,7 +136,7 @@ function getImage($id,$product){
                                     <div class="cart-summary">
                                         <div class="cart-content">
                                             <h1>Cart Summary</h1>
-                                            <p>Sub Total<span id='sub-total'></span></p>
+                                            <p>Sub Total<span id='sub-total'>$1,200</span></p>
                                             <p>Delivery Cost<span id='delivery-cost' data-delivery-cost="5">$5</span></p>
                                             <h2>Grand Total<span id='grand-total'></span></h2>
                                             
@@ -144,6 +156,8 @@ Checkout
                         </div>
                     </div>
           
+          
+
         <!-- Footer Bottom Start -->
      <?php require('../common/footer.php'); ?>
         <!-- Footer Bottom End -->       
@@ -159,186 +173,203 @@ Checkout
 
 <script>
 
-let cartItems = <?php echo $jsonItems; ?>;
-let userID=<?php echo $userID ?>
-
-function orderInfo(){
 
 
+function Checkout(){
+    $("#checkoutAPSBtn").on('click',function(e){
+        e.preventDefault();
 
+            $.ajax({
+                url:'../actions/checkout.php',
+                type:'post',
+                dataType: 'json',
+            
+                success:function(response){
+                
+                    Swal.fire({
+  icon: 'success',
+  title: 'Success!',
+  text: response.message,
+  confirmButtonText: 'OK',
+  timer: 2000 // Optional: closes the alert automatically after 2 seconds
+})
 
-
-
+        }
+    }
+    )
+            
+        }
+    )
 }
 
+Checkout()
 
-function orderAndIndividItemsInfo() {
-    let individItems = {}; // Use an array to store individual items
-    let orderInfo = {};
-    let data={
-        'userID':userID
-    } //
-    cartItems.forEach(id => {
-        let _id=id
-        let item={};
-        let elements = $('.' + id); // Assuming id is the correct identifier
-        elements.each(function() { // Use .each() for jQuery objects
-            //
-            let element = $(this); // Convert to jQuery object
+// function orderAndIndividItemsInfo() {
+//     let individItems = {}; // Use an array to store individual items
+//     let orderInfo = {};
+//     let data={
+//         'userID':userID
+//     } //
+//     cartItems.forEach(id => {
+//         let _id=id
+//         let item={};
+//         let elements = $('.' + id); // Assuming id is the correct identifier
+//         elements.each(function() { // Use .each() for jQuery objects
+//             //
+//             let element = $(this); // Convert to jQuery object
             
            
          
 
-            if (element.hasClass('price')) {
-                item.price = element.val();
-            }
-            if (element.hasClass('quantity')) {
-                item.quantity = element.val();
-            }
+//             if (element.hasClass('price')) {
+//                 item.price = element.val();
+//             }
+//             if (element.hasClass('quantity')) {
+//                 item.quantity = element.val();
+//             }
             
-            individItems[_id]=item
+//             individItems[_id]=item
             
             
 
-        });
+//         });
 
        
 
-    });
+//     });
 
     
-   // Alerting the stringified version of the
+//    // Alerting the stringified version of the
 
-   let grandTotal=$('#grand-total').html()
-   let charToRemove = '$';
+//    let grandTotal=$('#grand-total').html()
+//    let charToRemove = '$';
 
-let newGrand = grandTotal.split(charToRemove).join('');
+// let newGrand = grandTotal.split(charToRemove).join('');
 
-orderInfo.orderTotal=newGrand
+// orderInfo.orderTotal=newGrand
 
 
 
-data.individItems=individItems; //
-        data.orderInfo=orderInfo; //
+// data.individItems=individItems; //
+//         data.orderInfo=orderInfo; //
     
 
-return data;
+// return data;
 
-        console.log(data);
+//         console.log(data);
    
-}
+// }
 
 
 
-function getSubAndTotal() {
+// function getSubAndTotal() {
 
-let subTotal=0
+// let subTotal=0
 
-$('.price').each(function() {
-// Parse the price as a float and add it to the subtotal
-subTotal += parseFloat($(this).val());
+// $('.price').each(function() {
+// // Parse the price as a float and add it to the subtotal
+// subTotal += parseFloat($(this).val());
 
-});
-var grandTotal = subTotal + parseFloat($('#delivery-cost').data('delivery-cost'));
-
-
-$('#sub-total').html('$'+subTotal)
-$('#grand-total').html('$'+grandTotal);
-}
+// });
+// var grandTotal = subTotal + parseFloat($('#delivery-cost').data('delivery-cost'));
 
 
+// $('#sub-total').html('$'+subTotal)
+// $('#grand-total').html('$'+grandTotal);
+// }
 
 
-    $(document).ready(function(){
+
+
+//     $(document).ready(function(){
   
-
-getSubAndTotal();
+// getSubAndTotal();
           
-        $('.remove').on('click', function(){
+//         $('.remove').on('click', function(){
          
-            let id=$(this).attr('id')
-            $.ajax({
-                url:'../actions/remove_from_cart.php',
-                type:'post',
-                dataType: 'json',
-                data:{id},
-                success:function(response){
-                    Swal.fire({
-  icon: "success",
-  title: 'success',
-  text: response.message,
-  timer:2000,
-  showConfirmButton: false
-                }
-                    )
-                    location.reload();
+//             let id=$(this).attr('id')
+//             $.ajax({
+//                 url:'../actions/remove_from_cart.php',
+//                 type:'post',
+//                 dataType: 'json',
+//                 data:{id},
+//                 success:function(response){
+//                     Swal.fire({
+//   icon: "success",
+//   title: 'success',
+//   text: response.message,
+//   timer:2000,
+//   showConfirmButton: false
+//                 }
+//                     )
+//                     location.reload();
           
-        }
-    }
-    )
-    })
+//         }
+//     }
+//     )
+//     })
 
-    $('.quantity').each(function(index) {
+//     $('.quantity').each(function(index) {
      
-    $(this).on('change', function() {
+//     $(this).on('change', function() {
       
-        var quantity = $(this).val();
-        var priceElement = $('.price').eq(index);
-        var price=priceElement.data('price');
+//         var quantity = $(this).val();
+//         var priceElement = $('.price').eq(index);
+//         var price=priceElement.data('price');
 
-        priceElement.val(price * quantity);
+//         priceElement.val(price * quantity);
       
-      getSubAndTotal()
+//       getSubAndTotal()
       
 
-    });
-});
+//     });
+// });
 
 
-$('#checkOutInfo').on('submit',function(e){
+// $('#checkOutInfo').on('submit',function(e){
     
-    e.preventDefault();
+//     e.preventDefault();
 
 
 
  
-nonForm=orderAndIndividItemsInfo()
+// nonForm=orderAndIndividItemsInfo()
 
-    let formData=$(this).serializeArray()
-    $.ajax({
-                url:'../actions/checkout.php',
-                type:'post',
-                dataType: 'json',
-                data:{
-                   formData,
-                   nonForm
+//     let formData=$(this).serializeArray()
+//     $.ajax({
+//                 url:'../actions/checkout.php',
+//                 type:'post',
+//                 dataType: 'json',
+//                 data:{
+//                    formData,
+//                    nonForm
                 
                 
                     
 
-                },
-                success:function(response){
+//                 },
+//                 success:function(response){
 
-                    if(response.status=='ok'){
+//                     if(response.status=='ok'){
                    
-                        Swal.fire({
-  icon: "success",
-  title: "Welcome",
-  text: response.message,
-  timer:2000,
-  showConfirmButton: false
+//                         Swal.fire({
+//   icon: "success",
+//   title: "Welcome",
+//   text: response.message,
+//   timer:2000,
+//   showConfirmButton: false
 
-}).then(function(){
-    window.location.href = 'http://localhost/www/matjar/user/pages/home.php';
+// }).then(function(){
+//     window.location.href = 'http://localhost/www/matjar/user/pages/home.php';
 
-}
-)
-                       }
+// }
+// )
+//                        }
                     
-    }}
-    )
-})
-    })
+//     }}
+//     )
+// })
+//     })
 
 
 

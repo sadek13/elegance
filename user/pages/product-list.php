@@ -187,7 +187,7 @@ $jsPre=json_encode($preFilterObj);
                 
                 <div class="form-group">
                     <h5>Weight g</h5>
-                    <input type="range" class="form-control-range filter weight" id="weight-slider" min="0" max="1500">
+                    <input type="range" class="form-control-range filter weight" id="weight-slider" min="0" max="100">
                     <span id="weight-range-label"></span>
                 </div>
 

@@ -75,6 +75,8 @@ else{
 
     $_SESSION['userID']= $id;
 
+    $_SESSION['cart']=[];
+
   // Output the JSON response
 
   header('Content-Type: application/json');
